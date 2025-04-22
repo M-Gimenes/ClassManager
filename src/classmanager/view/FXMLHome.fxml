@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" spacing="30.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classmanager.controller.FXMLHomeController">
+   <children>
+      <Button fx:id="menuClasses" mnemonicParsing="false" onAction="#handleMenuClasses" prefHeight="40.0" prefWidth="120.0" text="Turmas" textFill="#000000cb">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="menuSchedule" mnemonicParsing="false" onAction="#handleMenuSchedule" prefHeight="40.0" prefWidth="120.0" text="Agenda" textFill="#000000cb">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="menuPayments" mnemonicParsing="false" onAction="#handleMenuPayments" prefHeight="40.0" prefWidth="120.0" text="Pagamentos" textFill="#000000cb">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="menuReports" mnemonicParsing="false" onAction="#handleMenuReports" prefHeight="40.0" prefWidth="120.0" text="Relatórios" textFill="#000000cc">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</VBox>
