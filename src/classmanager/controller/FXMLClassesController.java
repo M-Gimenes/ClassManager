@@ -18,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import classmanager.model.dao.ClassGroupDAO;
 import classmanager.model.domain.ClassGroup;
+import classmanager.util.StudentUtil;
 import classmanager.util.ViewPaths;
 
 public class FXMLClassesController implements Initializable {
@@ -60,7 +61,7 @@ public class FXMLClassesController implements Initializable {
             labelClass.setText(String.valueOf(cg.getName()));
             labelStatus.setText(String.valueOf(cg.getStatus()));
             observableListStudents.clear();
-            observableListStudents.addAll(cg.getStudents());
+            observableListStudents.addAll(StudentUtil.extractNames(cg.getStudents()));
         } else {
             labelClass.setText("");
             labelStatus.setText("");
@@ -80,7 +81,7 @@ public class FXMLClassesController implements Initializable {
         ClassGroup cg = new ClassGroup();
         boolean buttonConfirmClicked = showFXMLClassesDialog(cg);
         if (buttonConfirmClicked) {
-            classGroupDAO.saveClassGroup(cg);
+            classGroupDAO.insertClassGroup(cg);
             observableListCG.add(cg);
         }
     }

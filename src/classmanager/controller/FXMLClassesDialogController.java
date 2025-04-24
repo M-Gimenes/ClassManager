@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import classmanager.model.domain.ClassGroup;
 import classmanager.model.domain.Status;
+import classmanager.util.StudentUtil;
 
 public class FXMLClassesDialogController implements Initializable {
 
@@ -55,7 +56,7 @@ public class FXMLClassesDialogController implements Initializable {
             fieldNameCG.setText(cg.getName());
             comboBoxStatus.setValue(cg.getStatus());
             if (cg.getStudents() != null) {
-                observableListStudents = FXCollections.observableArrayList(cg.getStudents());
+                observableListStudents = FXCollections.observableArrayList(StudentUtil.extractNames(cg.getStudents()));
             } else {
                 observableListStudents = FXCollections.observableArrayList();    
             }
@@ -99,7 +100,7 @@ public class FXMLClassesDialogController implements Initializable {
         if (validateInputs()) {
             cg.setName(fieldNameCG.getText());
             cg.setStatus(comboBoxStatus.getValue());
-            cg.setStudents(observableListStudents);
+            //cg.setStudents(observableListStudents);
             buttonConfirmClicked = true;
             stage.close();
         }

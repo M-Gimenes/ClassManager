@@ -30,7 +30,15 @@ public class LessonDAO {
     }
 
     private void createTableIfNotExists() {
-        String sql = "CREATE TABLE IF NOT EXISTS lessons (id INTEGER PRIMARY KEY AUTOINCREMENT, class_id INTEGER, day TEXT, students TEXT, skills TEXT, content TEXT, FOREIGN KEY (class_id) REFERENCES classes(id)); ";
+        String sql = "CREATE TABLE IF NOT EXISTS lessons ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "class_id INTEGER, "
+                + "day TEXT, "
+                + "students TEXT, "
+                + "skills TEXT, "
+                + "content TEXT, "
+                + "FOREIGN KEY (class_id) REFERENCES classes(id)"
+                + ");";
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
@@ -38,7 +46,7 @@ public class LessonDAO {
         }
     }
 
-    public void saveLessons(int classId, List<Lesson> lessons) {
+    public void insertLessons(int classId, List<Lesson> lessons) {
         String sql = "INSERT INTO lessons (class_id, day, students, skills, content) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             for (Lesson lesson : lessons) {

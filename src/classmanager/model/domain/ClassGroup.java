@@ -6,12 +6,14 @@ public class ClassGroup {
 
     private int cgID;
     private String name;
+    private float value;
+    private int weeklyFreq;
 
-    private List<String> students;
+    private List<Student> students;
     private List<Lesson> lessons;
     private Status status;
 
-    public ClassGroup(String name, List<String> students) {
+    public ClassGroup(String name, List<Student> students) {
         this.name = name;
         this.students = students;
     }
@@ -35,11 +37,27 @@ public class ClassGroup {
         this.name = name;
     }
 
-    public List<String> getStudents() {
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
+    }
+
+    public int getWeeklyFreq() {
+        return weeklyFreq;
+    }
+
+    public void setWeeklyFreq(int weeklyFreq) {
+        this.weeklyFreq = weeklyFreq;
+    }
+
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<String> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
@@ -51,8 +69,8 @@ public class ClassGroup {
         this.lessons = lessons;
     }
 
-    public void addStudent(String name) {
-        this.students.add(name);
+    public void addStudent(Student student) {
+        this.students.add(student);
     }
 
     public void addLesson(Lesson lesson) {
@@ -69,6 +87,6 @@ public class ClassGroup {
     
     @Override
     public String toString() {
-        return name; // ou qualquer texto que você quiser exibir na ListView
+        return name;
     }
 }
