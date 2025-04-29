@@ -1,10 +1,3 @@
-/* :root{
-    --verdeagua: #a8e6ce;
-    --verdeclaro: #dcedc2;
-    --coral: #ffd3b5;
-    --rosaclaro: #ffaaa6;
-    --rosaescuro: #ff8c94;      
-} */
 /* 
 preto #3b3f49 
 branco #fdfaeb 
@@ -12,9 +5,11 @@ rosinha #faeddf
 rosa claro #f3c6b9
 rosaescuro #f7a29e  
 */
+
 .root {
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-color: #3b3f49 ;
+    -fx-font-weight: bold;
 }
 /* Labels padrão */
 .label {
@@ -25,20 +20,10 @@ rosaescuro #f7a29e
 /* Títulos */
 .label-title {
     -fx-font-size: 18px;
-    -fx-font-weight: bold;
     -fx-text-fill: #faeddf ;
 }
 
-/* Botões */
 
-.icon-button {
-    -fx-background-radius: 6;
-    -fx-cursor: hand;
-    -fx-content-display: graphic-only;
-    -fx-padding: 4;
-}
-
-/* Cores distintas por ação */
 .add-button {
     -fx-background-color: #f3c6b9; 
 }
@@ -48,20 +33,22 @@ rosaescuro #f7a29e
 .remove-button {
     -fx-background-color: #f7a29e; 
 }
-
+.back-button{
+    -fx-background-color: #faeddf;
+}
 /* Efeitos ao passar o mouse */
 .add-button:hover {
-    -fx-background-color: #f3c6b9;
+    -fx-background-color: #f4a994;
 }
 .update-button:hover {
-    -fx-background-color: #fdfaeb;
+    -fx-background-color: #faf3cf;
 }
 .remove-button:hover {
-    -fx-background-color: #f7a29e;
+    -fx-background-color: #f7837d;
 }
 
 /* Campos de texto */
-.text-field {
+.field {
     -fx-background-color: #faeddf;
     -fx-border-color: #faeddf;
     -fx-border-radius: 6;
@@ -69,21 +56,43 @@ rosaescuro #f7a29e
     -fx-padding: 5 10;
 }
 
+.menu-button{
+    -fx-font-size: 20px;
+    -fx-text-fill: #3b3f49;
+    -fx-content-display: left;         
+    -fx-graphic-text-gap: 10px;       
+    -fx-alignment: center-left;    
+    -fx-padding: 6 12;
+}
+
 /* ComboBox */
 .combo-box {
     -fx-background-color: #faeddf;
     -fx-border-color: #faeddf;
+    -fx-text-fill: #faeddf;
     -fx-border-radius: 6;
     -fx-background-radius: 6;
 }
 
+.vbox-button-group {
+    -fx-spacing: 25;
+    -fx-alignment: center;
+    -fx-padding: 10;
+    -fx-font-size: 20px;
+    -fx-font-color: #3b3f49 ;
+}
+
 /* ListView */
 .list-view {
-    -fx-background-color: #faeddf;
+    -fx-background-color: #3b3f49;
     -fx-border-color: #faeddf;
     -fx-background-radius: 6;
     -fx-border-radius: 4;
     -fx-padding: 5;
+    -fx-text-fill: #faeddf;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
 }
 
 /* GridPane custom */
@@ -104,6 +113,36 @@ rosaescuro #f7a29e
 
 /* Linha central (divider) do SplitPane */
 .split-pane-divider {
-    -fx-background-color: #FAEDDF;
+    -fx-background-color: #faeddf;
     -fx-padding: 2px;
+}
+
+/* Fundo geral da tabela */
+.table-view {
+    -fx-background-color: #3b3f49; 
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 5;
+}
+
+/* Fundo do cabeçalho (onde ficam os títulos das colunas) */
+.table-view .column-header-background {
+    -fx-background-color: #3b3f49; 
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2px 0;
+}
+
+/* Cada célula de título da coluna */
+.table-view .column-header {
+    -fx-background-color: #3b3f49; 
+    -fx-border-color: #faeddf;
+    -fx-border-width: 0 0 2px 0; /* Borda inferior */
+}
+
+/* Título da coluna */
+.table-view .column-header .label {
+    -fx-text-fill: #faeddf;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
+    -fx-padding: 8 12 8 12; /* top, right, bottom, left */
 }
