@@ -6,9 +6,19 @@ import java.util.List;
 public class Lesson {
     
     private Date day;
-    private List<String> students;
+    private List<Student> students;
     private List<Skills> skills;
     private String content;
+
+    public Lesson(Date day, List<Student> students, List<Skills> skills, String content) {
+        this.day = day;
+        this.students = students;
+        this.skills = skills;
+        this.content = content;
+    }
+
+    public Lesson() {
+    }
 
     public Date getDay() {
         return day;
@@ -18,11 +28,11 @@ public class Lesson {
         this.day = day;
     }
 
-    public List<String> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<String> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
