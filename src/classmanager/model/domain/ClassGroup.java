@@ -8,14 +8,17 @@ public class ClassGroup {
     private String name;
     private float value;
     private int weeklyFreq;
-
     private List<Student> students;
     private List<Lesson> lessons;
     private Status status;
 
-    public ClassGroup(String name, List<Student> students) {
+    public ClassGroup(String name, float value, int weeklyFreq, List<Student> students, List<Lesson> lessons, Status status) {
         this.name = name;
+        this.value = value;
+        this.weeklyFreq = weeklyFreq;
         this.students = students;
+        this.lessons = lessons;
+        this.status = status;
     }
 
     public ClassGroup() {
