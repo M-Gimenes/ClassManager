@@ -1,9 +1,10 @@
 /* 
-preto #3b3f49 
-branco #fdfaeb 
-rosinha #faeddf 
-rosa claro #f3c6b9
-rosaescuro #f7a29e  
+preto #3b3f49
+branco #f0eff4
+verde #74bead
+rosinha #fbdada 
+rosaescuro #da6c7b  
+
 */
 
 .root {
@@ -14,43 +15,45 @@ rosaescuro #f7a29e
 /* Labels padrão */
 .label {
     -fx-font-size: 14px;
-    -fx-text-fill: #faeddf ;
+    -fx-text-fill: #f0eff4 ;
 }
 
 /* Títulos */
 .label-title {
     -fx-font-size: 18px;
-    -fx-text-fill: #faeddf ;
+    -fx-text-fill: #f0eff4 ;
 }
 
 
 .add-button {
-    -fx-background-color: #f3c6b9; 
+    -fx-background-color: #74bead; 
 }
 .update-button {
-    -fx-background-color: #fdfaeb; 
+    -fx-background-color: #fbdada; 
 }
 .remove-button {
-    -fx-background-color: #f7a29e; 
+    -fx-background-color: #da6c7b; 
 }
 .back-button{
-    -fx-background-color: #faeddf;
+    -fx-background-color: #f0eff4;
 }
 /* Efeitos ao passar o mouse */
 .add-button:hover {
-    -fx-background-color: #f4a994;
+    -fx-background-color: #59b19c;
 }
 .update-button:hover {
-    -fx-background-color: #faf3cf;
+    -fx-background-color: #f7b6b6;
 }
 .remove-button:hover {
-    -fx-background-color: #f7837d;
+    -fx-background-color: #d24b5d;
 }
-
+.back-button:hover {
+    -fx-background-color: #dddbe6;
+}
 /* Campos de texto */
 .field {
-    -fx-background-color: #faeddf;
-    -fx-border-color: #faeddf;
+    -fx-background-color: #f0eff4;
+    -fx-border-color: #f0eff4;
     -fx-border-radius: 6;
     -fx-background-radius: 6;
     -fx-padding: 5 10;
@@ -67,9 +70,9 @@ rosaescuro #f7a29e
 
 /* ComboBox */
 .combo-box {
-    -fx-background-color: #faeddf;
-    -fx-border-color: #faeddf;
-    -fx-text-fill: #faeddf;
+    -fx-background-color: #f0eff4;
+    -fx-border-color: #f0eff4;
+    -fx-text-fill: #3b3f49;
     -fx-border-radius: 6;
     -fx-background-radius: 6;
 }
@@ -79,17 +82,17 @@ rosaescuro #f7a29e
     -fx-alignment: center;
     -fx-padding: 10;
     -fx-font-size: 20px;
-    -fx-font-color: #3b3f49 ;
+    /* -fx-font-color: #3b3f49 ; */
 }
 
 /* ListView */
 .list-view {
     -fx-background-color: #3b3f49;
-    -fx-border-color: #faeddf;
+    -fx-border-color: #f0eff4;
     -fx-background-radius: 6;
     -fx-border-radius: 4;
     -fx-padding: 5;
-    -fx-text-fill: #faeddf;
+    -fx-text-fill: #f0eff4;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-alignment: center-left;
@@ -113,7 +116,7 @@ rosaescuro #f7a29e
 
 /* Linha central (divider) do SplitPane */
 .split-pane-divider {
-    -fx-background-color: #faeddf;
+    -fx-background-color: #f0eff4;
     -fx-padding: 2px;
 }
 
@@ -134,13 +137,13 @@ rosaescuro #f7a29e
 /* Cada célula de título da coluna */
 .table-view .column-header {
     -fx-background-color: #3b3f49; 
-    -fx-border-color: #faeddf;
+    -fx-border-color: #f0eff4;
     -fx-border-width: 0 0 2px 0; /* Borda inferior */
 }
 
 /* Título da coluna */
 .table-view .column-header .label {
-    -fx-text-fill: #faeddf;
+    -fx-text-fill: #f0eff4;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-alignment: center-left;

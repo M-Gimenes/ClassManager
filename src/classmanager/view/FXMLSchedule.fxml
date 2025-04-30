@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classmanager.controller.FXMLScheduleController">
    <children>
-      <ComboBox fx:id="comboBox" layoutX="210.0" layoutY="14.0" prefHeight="25.0" prefWidth="180.0" promptText="Selecione uma turma" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="20.0" />
+      <ComboBox fx:id="comboBox" layoutX="210.0" layoutY="14.0" prefHeight="25.0" prefWidth="180.0" promptText="Selecione uma turma" styleClass="combo-box" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="20.0" />
       <TableView fx:id="tableView" layoutY="61.0" prefHeight="279.0" prefWidth="600.0" styleClass="list-view" AnchorPane.bottomAnchor="61.0" AnchorPane.topAnchor="61.0">
         <columns>
           <TableColumn fx:id="tableViewColumnDate" prefWidth="74.0" text="Data" />
@@ -51,7 +51,7 @@
                </graphic></Button>
          </children>
       </HBox>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" opacity="0.8" prefHeight="20.0" prefWidth="20.0" styleClass="back-button">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="back-button">
          <graphic>
             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
