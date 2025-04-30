@@ -3,6 +3,7 @@
 ## Primeira coisa quando começar a trabalhar
 
 Entrar no diretorio do projeto pelo cmd
+
 Vá para a branch principal
 
 - *git checkout main*
@@ -22,9 +23,10 @@ Veja os arquivos que foram modificados
 - *git status*
 
 Adicione os arquivos modificados.
-Todos:
 - *git add .*
-Separadamentes:
+
+ou
+
 - *git add {nome-do-arquivo}*
 
 Faça o commit com uma mensagem descritiva
@@ -33,17 +35,17 @@ Faça o commit com uma mensagem descritiva
 Verifique se sua branch está atualizada com o servidor
 - *git fetch origin*
 
-Se houver mudanças, faça:
+- Se houver mudanças, faça:
 
-- *git checkout main*
-- *git pull origin main*
-- *git checkout {nome-da-branch}*
-- *git merge main*
+  - *git checkout main*
+  - *git pull origin main*
+  - *git checkout {nome-da-branch}*
+  - *git merge main*
 
-Se houver conflitos, resolva no código. Depois:
+- Se houver conflitos, resolva no código. Depois:
 
-- *git add .*
-- *git commit -m "Resolvendo conflitos merge"*
+  - *git add .*
+  - *git commit -m "Resolvendo conflitos merge"*
 
 Envie suas mudanças para o GitHub
 - *git push origin {nome-da-branch}*
