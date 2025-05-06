@@ -8,6 +8,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class StudentDAO {
 
@@ -27,11 +28,11 @@ public class StudentDAO {
     }
 
     private void createTableIfNotExists() {
-        String sql = "CREATE TABLE IF NOT EXISTS students (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name TEXT NOT NULL, " +
-                "birth_date TEXT NOT NULL" +
-                ");";
+        String sql = "CREATE TABLE IF NOT EXISTS students ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "name TEXT NOT NULL, "
+                + "birth_date TEXT NOT NULL"
+                + ");";
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
@@ -92,5 +93,23 @@ public class StudentDAO {
         } catch (SQLException e) {
             LoggerUtil.logError("StudentDAO - deleteStudent", e);
         }
+    }
+
+    public Optional<Student> getById(int id) {
+        String sql = "SELECT * FROM students WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Student student = new Student();
+                student.setId(rs.getInt("id"));
+                student.setName(rs.getString("name"));
+                student.setClassId(rs.getInt("class_id"));
+                return Optional.of(student);
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("StudentDAO - getById", e);
+        }
+        return Optional.empty();
     }
 }

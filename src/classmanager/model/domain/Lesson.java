@@ -1,16 +1,19 @@
 package classmanager.model.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public class Lesson {
     
-    private Date day;
+    private int id;
+    private int classId;
+    private LocalDate day;
     private List<Student> students;
-    private List<Skills> skills;
+    private List<Skill> skills;
     private String content;
 
-    public Lesson(Date day, List<Student> students, List<Skills> skills, String content) {
+    public Lesson(LocalDate day, List<Student> students, List<Skill> skills, String content) {
         this.day = day;
         this.students = students;
         this.skills = skills;
@@ -20,11 +23,27 @@ public class Lesson {
     public Lesson() {
     }
 
-    public Date getDay() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
+    public LocalDate getDay() {
         return day;
     }
 
-    public void setDay(Date day) {
+    public void setDay(LocalDate day) {
         this.day = day;
     }
 
@@ -36,11 +55,11 @@ public class Lesson {
         this.students = students;
     }
 
-    public List<Skills> getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<Skills> skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 

@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import classmanager.model.dao.ClassGroupDAO;
+import classmanager.model.dao.StudentDAO;
 import classmanager.model.domain.ClassGroup;
 import classmanager.util.StudentUtil;
 import classmanager.util.ViewPaths;
@@ -39,6 +40,7 @@ public class FXMLClassesController implements Initializable {
     private Button buttonRemove;
 
     private ClassGroupDAO classGroupDAO;
+    private StudentDAO studentDAO;
 
     private ObservableList<ClassGroup> observableListCG;
     private ObservableList<String> observableListStudents;
@@ -61,7 +63,7 @@ public class FXMLClassesController implements Initializable {
             labelClass.setText(String.valueOf(cg.getName()));
             labelStatus.setText(String.valueOf(cg.getStatus()));
             observableListStudents.clear();
-            observableListStudents.addAll(StudentUtil.extractNames(cg.getStudents()));
+            studentDAO.getById(cg.getCgID()).ifPresent(student -> observableListStudents.add(student));
         } else {
             labelClass.setText("");
             labelStatus.setText("");
