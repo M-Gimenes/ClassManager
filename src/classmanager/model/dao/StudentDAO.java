@@ -95,21 +95,23 @@ public class StudentDAO {
         }
     }
 
-    public Optional<Student> getById(int id) {
-        String sql = "SELECT * FROM students WHERE id = ?";
+    public List<Student> getByClassId(int classId) {
+        List<Student> students = new ArrayList<>();
+        String sql = "SELECT * FROM students WHERE class_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setInt(1, classId);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 Student student = new Student();
                 student.setId(rs.getInt("id"));
                 student.setName(rs.getString("name"));
                 student.setClassId(rs.getInt("class_id"));
-                return Optional.of(student);
+                students.add(student);
             }
         } catch (SQLException e) {
-            LoggerUtil.logError("StudentDAO - getById", e);
+            LoggerUtil.logError("StudentDAO - getByClassId", e);
         }
-        return Optional.empty();
+        return students;
     }
+
 }

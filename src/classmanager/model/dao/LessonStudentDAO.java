@@ -15,6 +15,7 @@ public class LessonStudentDAO {
 
     private static LessonStudentDAO instance;
     private final Connection conn;
+    private StudentDAO studentDAO = StudentDAO.getInstance();
 
     private LessonStudentDAO() {
         this.conn = DatabaseManager.getInstance().getConnection();
@@ -71,11 +72,10 @@ public class LessonStudentDAO {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, lessonId);
             ResultSet rs = stmt.executeQuery();
-
-            StudentDAO studentDAO = StudentDAO.getInstance();
+            
             while (rs.next()) {
                 int studentId = rs.getInt("student_id");
-                studentDAO.getById(studentId).ifPresent(students::add);
+                studentDAO.getByClassId(studentId).ifPresent(students::add);
             }
         } catch (SQLException e) {
             LoggerUtil.logError("LessonStudentDAO - getStudentsByLessonId", e);

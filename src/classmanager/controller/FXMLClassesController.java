@@ -48,6 +48,7 @@ public class FXMLClassesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         classGroupDAO = ClassGroupDAO.getInstance();
+        studentDAO = StudentDAO.getInstance();
         observableListCG = FXCollections.observableArrayList(classGroupDAO.getAllClasses());
         observableListStudents = FXCollections.observableArrayList();
         listViewClasses.setItems(observableListCG);

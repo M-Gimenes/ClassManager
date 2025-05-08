@@ -1,5 +1,6 @@
 package classmanager.controller;
 
+import classmanager.model.dao.StudentDAO;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,7 +17,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import classmanager.model.domain.ClassGroup;
 import classmanager.model.domain.Status;
+import classmanager.model.domain.Student;
 import classmanager.util.StudentUtil;
+import java.util.Optional;
 
 public class FXMLClassesDialogController implements Initializable {
 
@@ -43,8 +46,11 @@ public class FXMLClassesDialogController implements Initializable {
 
     private ObservableList<String> observableListStudents;
 
+    private StudentDAO studentDAO;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        studentDAO = StudentDAO.getInstance();
         observableListStudents = FXCollections.observableArrayList();
         listViewStudents.setItems(observableListStudents);
         comboBoxStatus.getItems().addAll(Status.values());
@@ -55,11 +61,8 @@ public class FXMLClassesDialogController implements Initializable {
         if (cg != null) {
             fieldNameCG.setText(cg.getName());
             comboBoxStatus.setValue(cg.getStatus());
-            if (cg.getStudents() != null) {
-                observableListStudents = FXCollections.observableArrayList(StudentUtil.extractNames(cg.getStudents()));
-            } else {
-                observableListStudents = FXCollections.observableArrayList();    
-            }
+            List<Student> students = studentDAO.getByClassId(cg.getCgID());
+            observableListStudents = FXCollections.observableArrayList(StudentUtil.extractNames(students));
             listViewStudents.setItems(observableListStudents);
         }
     }
