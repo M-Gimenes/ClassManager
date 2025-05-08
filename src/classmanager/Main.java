@@ -16,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        Parent root = FXMLLoader.load(getClass().getResource(ViewPaths.HOME + ".fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(ViewPaths.HOME));
 
         scene = new Scene(root);
 
@@ -29,7 +29,7 @@ public class Main extends Application {
     }
 
     public static void setRoot(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml));
         scene.setRoot(fxmlLoader.load());
         primaryStage.sizeToScene();
     }

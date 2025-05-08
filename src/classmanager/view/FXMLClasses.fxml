@@ -26,7 +26,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Button layoutX="4.0" layoutY="4.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="back-button">
+                  <Button fx:id="buttonBack" layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="20.0" prefWidth="20.0" styleClass="back-button">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>

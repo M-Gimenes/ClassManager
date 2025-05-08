@@ -2,24 +2,34 @@ package classmanager.model.domain;
 
 import java.time.LocalDate;
 
-
 public class Student {
+
     private int id;
     private String name;
     private LocalDate birthDate;
     private String foneNumber;
     private String email;
     private String school;
+    private int classId;
 
-    public Student(String name, LocalDate birthDate, String foneNumber, String email, String school) {
+    public Student(String name, LocalDate birthDate, String foneNumber, String email, String school, int classId) {
         this.name = name;
         this.birthDate = birthDate;
         this.foneNumber = foneNumber;
         this.email = email;
         this.school = school;
+        this.classId = classId;
     }
-    
+
     public Student() {
+    }
+
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     public String getSchool() {
@@ -30,7 +40,6 @@ public class Student {
         this.school = school;
     }
 
-    
     public String getFoneNumber() {
         return foneNumber;
     }
@@ -46,7 +55,6 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
-    
 
     public int getId() {
         return id;
@@ -72,8 +80,4 @@ public class Student {
         this.birthDate = birthDate;
     }
 
-    public void setClassId(int aInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

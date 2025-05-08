@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classmanager.controller.FXMLScheduleController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classmanager.controller.FXMLLessonsController">
    <children>
       <ComboBox fx:id="comboBox" layoutX="210.0" layoutY="14.0" prefHeight="25.0" prefWidth="180.0" promptText="Selecione uma turma" styleClass="combo-box" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="20.0" />
       <TableView fx:id="tableView" layoutY="61.0" prefHeight="279.0" prefWidth="600.0" styleClass="list-view" AnchorPane.bottomAnchor="61.0" AnchorPane.topAnchor="61.0">
@@ -51,7 +51,7 @@
                </graphic></Button>
          </children>
       </HBox>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="back-button">
+      <Button fx:id="buttonBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="20.0" prefWidth="20.0" styleClass="back-button">
          <graphic>
             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                <image>

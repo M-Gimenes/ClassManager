@@ -75,7 +75,7 @@ public class LessonStudentDAO {
             
             while (rs.next()) {
                 int studentId = rs.getInt("student_id");
-                studentDAO.getByClassId(studentId).ifPresent(students::add);
+                students.addAll(studentDAO.getByClassId(studentId));
             }
         } catch (SQLException e) {
             LoggerUtil.logError("LessonStudentDAO - getStudentsByLessonId", e);

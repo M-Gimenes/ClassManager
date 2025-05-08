@@ -1,5 +1,6 @@
 package classmanager.controller;
 
+import classmanager.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,8 +25,9 @@ import classmanager.model.dao.ClassGroupDAO;
 import classmanager.model.dao.LessonDAO;
 import classmanager.model.domain.ClassGroup;
 import classmanager.model.domain.Lesson;
+import classmanager.util.ViewPaths;
 
-public class FXMLScheduleController implements Initializable {
+public class FXMLLessonsController implements Initializable {
 
     @FXML
     private ComboBox<ClassGroup> comboBox;
@@ -96,6 +98,11 @@ public class FXMLScheduleController implements Initializable {
 
     @FXML
     private void handleButtonUpdate(ActionEvent event) {
+    }
+    
+    @FXML
+    private void handleButtonBack(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.HOME);
     }
 
 //    public boolean showFXMLScheduleDialog(Lesson lesson) throws IOException {
