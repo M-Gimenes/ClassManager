@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Matheus/Desktop/POO2/ClassManager/src/classmanager/model/domain/Status.java</file>
+            <file>file:/C:/Users/20231si041/Documents/NetBeansProjects/ClassManager/src/classmanager/model/domain/Student.java</file>
+            <file>file:/C:/Users/20231si041/Documents/NetBeansProjects/ClassManager/src/classmanager/controller/FXMLClassesDialogController.java</file>
+            <file>file:/C:/Users/20231si041/Documents/NetBeansProjects/ClassManager/src/classmanager/view/FXMLLessons.fxml</file>
+            <file>file:/C:/Users/20231si041/Documents/NetBeansProjects/ClassManager/src/classmanager/model/dao/LessonDAO.java</file>
+            <file>file:/C:/Users/20231si041/Documents/NetBeansProjects/ClassManager/src/classmanager/controller/FXMLLessonsController.java</file>
+            <file>file:/C:/Users/20231si041/Documents/NetBeansProjects/ClassManager/src/classmanager/view/FXMLLessonsDialog.fxml</file>
+            <file>file:/C:/Users/20231si041/Documents/NetBeansProjects/ClassManager/src/classmanager/Main.java</file>
+            <file>file:/C:/Users/20231si041/Documents/NetBeansProjects/ClassManager/src/classmanager/model/domain/Status.java</file>
         </group>
     </open-files>
 </project-private>

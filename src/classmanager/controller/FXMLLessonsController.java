@@ -92,7 +92,7 @@ public class FXMLLessonsController implements Initializable {
 //        }
     }
 
-    @FXML
+    @FXML   
     private void handleButtonRemove(ActionEvent event) {
     }
 
