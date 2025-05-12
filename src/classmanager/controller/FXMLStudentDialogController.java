@@ -43,14 +43,14 @@ public class FXMLStudentDialogController implements Initializable {
         // TODO
     }
 
-    public void setClassGroup(Student student) {
+    public void setStudent(Student student) {
         this.student = student;
         if (student != null) {
-            fieldNameCG.setText(cg.getName());
-            comboBoxStatus.setValue(cg.getStatus());
-            List<Student> students = studentDAO.getByClassId(cg.getCgID());
-            observableListStudents = FXCollections.observableArrayList(StudentUtil.extractNames(students));
-            listViewStudents.setItems(observableListStudents);
+            fieldName.setText(student.getName());
+            fieldNumber.setText(student.getFoneNumber());
+            fieldEmail.setText(student.getEmail());
+            fieldSchool.setText(student.getSchool());
+            dateBirthDate.setValue(student.getBirthDate());
         }
     }
 

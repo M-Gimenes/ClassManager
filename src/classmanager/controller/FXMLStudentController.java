@@ -106,7 +106,7 @@ public class FXMLStudentController implements Initializable {
     private void handleButtonUpdate(ActionEvent event) throws IOException {
         Student student = tableViewStudents.getSelectionModel().getSelectedItem();
         if (student != null) {
-            boolean buttonConfirmClicked = showFXMLClassesDialog(student);
+            boolean buttonConfirmClicked = showFXMLStudentsDialog(student);
             if (buttonConfirmClicked) {
                 studentDAO.updateStudent(student);
                 tableViewStudents.getSelectionModel().clearSelection();
@@ -127,15 +127,16 @@ public class FXMLStudentController implements Initializable {
         }
     }
 
-    public boolean showFXMLClassesDialog(Student student) throws IOException {
+    public boolean showFXMLStudentsDialog(Student student) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPaths.STUDENTSDIALOG));
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.setTitle("Insira os dados");
-        FXMLClassesDialogController controller = loader.getController();
+
+        FXMLClasses
+                DialogController controller = loader.getController();
         controller.setStage(stage);
-        controller.setClassGroup(student);
+        controller.setStudent(student);
         stage.showAndWait();
         return controller.isButtonConfirmClicked();
     }
