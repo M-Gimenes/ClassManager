@@ -1,25 +1,43 @@
 package classmanager.model.domain;
 
+import classmanager.model.dao.ClassGroupDAO;
 import java.time.LocalDate;
 
+// Emanuelly
 
 public class Student {
+
     private int id;
     private String name;
     private LocalDate birthDate;
     private String foneNumber;
     private String email;
     private String school;
+    private int classId;
 
-    public Student(String name, LocalDate birthDate, String foneNumber, String email, String school) {
+    public Student(String name, LocalDate birthDate, String foneNumber, String email, String school, int classId) {
         this.name = name;
         this.birthDate = birthDate;
         this.foneNumber = foneNumber;
         this.email = email;
         this.school = school;
+        this.classId = classId;
+    }
+
+    public Student() {
+    }
+
+    public int getClassId() {
+        return classId;
     }
     
-    public Student() {
+    public String getClassName() {
+        return ClassGroupDAO.getInstance().getClassGroupById(classId).getName();
+    }
+
+    
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     public String getSchool() {
@@ -30,7 +48,6 @@ public class Student {
         this.school = school;
     }
 
-    
     public String getFoneNumber() {
         return foneNumber;
     }
@@ -46,7 +63,6 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
-    
 
     public int getId() {
         return id;
@@ -71,5 +87,10 @@ public class Student {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-    
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

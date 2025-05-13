@@ -15,36 +15,45 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private Button menuPayments;
     @FXML
-    private Button menuReports;
-    @FXML
-    private Button menuSchedule;
-    @FXML
     private Button menuClasses;
+    @FXML
+    private Button menuStudents;
+    @FXML
+    private Button menuGraphics;
+    @FXML
+    private Button menuLessons;
+    @FXML
+    private Button menuReports;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-    
-    
+
     @FXML
     private void handleMenuClasses(ActionEvent event) throws IOException {
         Main.setRoot(ViewPaths.CLASSES);
     }
-    
+
     @FXML
-    private void handleMenuSchedule(ActionEvent event) throws IOException {
-        Main.setRoot(ViewPaths.SCHEDULE);
+    private void handleMenuStudents(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.STUDENTS);
     }
-    
+
+    @FXML
+    private void handleMenuLessons(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.LESSONS);
+    }
+
     @FXML
     private void handleMenuPayments(ActionEvent event) throws IOException {
-        Main.setRoot(ViewPaths.CLASSES);
     }
 
     @FXML
     private void handleMenuReports(ActionEvent event) throws IOException {
-        Main.setRoot(ViewPaths.CLASSES);
     }
 
+    @FXML
+    private void handleMenuGraphics(ActionEvent event) {
+    }
 
 }

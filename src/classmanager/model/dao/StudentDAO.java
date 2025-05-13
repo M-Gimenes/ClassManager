@@ -27,11 +27,15 @@ public class StudentDAO {
     }
 
     private void createTableIfNotExists() {
-        String sql = "CREATE TABLE IF NOT EXISTS students (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name TEXT NOT NULL, " +
-                "birth_date TEXT NOT NULL" +
-                ");";
+        String sql = "CREATE TABLE IF NOT EXISTS students ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "name TEXT NOT NULL, "
+                + "birth_date TEXT NOT NULL, "
+                + "fone_number TEXT, "
+                + "email TEXT, "
+                + "school TEXT, "
+                + "class_id INTEGER"
+                + ");";
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
@@ -40,10 +44,14 @@ public class StudentDAO {
     }
 
     public void insertStudent(Student student) {
-        String sql = "INSERT INTO students (name, birth_date) VALUES (?, ?)";
+        String sql = "INSERT INTO students (name, birth_date, fone_number, email, school, class_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, student.getName());
             stmt.setString(2, student.getBirthDate().toString());
+            stmt.setString(3, student.getFoneNumber());
+            stmt.setString(4, student.getEmail());
+            stmt.setString(5, student.getSchool());
+            stmt.setInt(6, student.getClassId());
             stmt.executeUpdate();
 
             ResultSet rs = stmt.getGeneratedKeys();
@@ -60,11 +68,7 @@ public class StudentDAO {
         String sql = "SELECT * FROM students";
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Student student = new Student();
-                student.setId(rs.getInt("id"));
-                student.setName(rs.getString("name"));
-                student.setBirthDate(LocalDate.parse(rs.getString("birth_date")));
-                students.add(student);
+                students.add(fromResultSet(rs));
             }
         } catch (SQLException e) {
             LoggerUtil.logError("StudentDAO - getAllStudents", e);
@@ -72,12 +76,31 @@ public class StudentDAO {
         return students;
     }
 
+    public List<Student> getByClassId(int classId) {
+        List<Student> students = new ArrayList<>();
+        String sql = "SELECT * FROM students WHERE class_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, classId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                students.add(fromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("StudentDAO - getByClassId", e);
+        }
+        return students;
+    }
+
     public void updateStudent(Student student) {
-        String sql = "UPDATE students SET name = ?, birth_date = ? WHERE id = ?";
+        String sql = "UPDATE students SET name = ?, birth_date = ?, fone_number = ?, email = ?, school = ?, class_id = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, student.getName());
             stmt.setString(2, student.getBirthDate().toString());
-            stmt.setInt(3, student.getId());
+            stmt.setString(3, student.getFoneNumber());
+            stmt.setString(4, student.getEmail());
+            stmt.setString(5, student.getSchool());
+            stmt.setInt(6, student.getClassId());
+            stmt.setInt(7, student.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             LoggerUtil.logError("StudentDAO - updateStudent", e);
@@ -92,5 +115,17 @@ public class StudentDAO {
         } catch (SQLException e) {
             LoggerUtil.logError("StudentDAO - deleteStudent", e);
         }
+    }
+
+    private Student fromResultSet(ResultSet rs) throws SQLException {
+        Student student = new Student();
+        student.setId(rs.getInt("id"));
+        student.setName(rs.getString("name"));
+        student.setBirthDate(LocalDate.parse(rs.getString("birth_date")));
+        student.setFoneNumber(rs.getString("fone_number"));
+        student.setEmail(rs.getString("email"));
+        student.setSchool(rs.getString("school"));
+        student.setClassId(rs.getInt("class_id"));
+        return student;
     }
 }

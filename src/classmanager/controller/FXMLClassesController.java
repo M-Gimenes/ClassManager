@@ -1,5 +1,6 @@
 package classmanager.controller;
 
+import classmanager.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +18,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import classmanager.model.dao.ClassGroupDAO;
+import classmanager.model.dao.StudentDAO;
 import classmanager.model.domain.ClassGroup;
+import classmanager.model.domain.Student;
 import classmanager.util.StudentUtil;
 import classmanager.util.ViewPaths;
 
@@ -26,7 +29,7 @@ public class FXMLClassesController implements Initializable {
     @FXML
     private ListView<ClassGroup> listViewClasses;
     @FXML
-    private ListView<String> listViewStudents;
+    private ListView<Student> listViewStudents;
     @FXML
     private Label labelClass;
     @FXML
@@ -39,13 +42,15 @@ public class FXMLClassesController implements Initializable {
     private Button buttonRemove;
 
     private ClassGroupDAO classGroupDAO;
+    private StudentDAO studentDAO;
 
     private ObservableList<ClassGroup> observableListCG;
-    private ObservableList<String> observableListStudents;
+    private ObservableList<Student> observableListStudents;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         classGroupDAO = ClassGroupDAO.getInstance();
+        studentDAO = StudentDAO.getInstance();
         observableListCG = FXCollections.observableArrayList(classGroupDAO.getAllClasses());
         observableListStudents = FXCollections.observableArrayList();
         listViewClasses.setItems(observableListCG);
@@ -61,7 +66,7 @@ public class FXMLClassesController implements Initializable {
             labelClass.setText(String.valueOf(cg.getName()));
             labelStatus.setText(String.valueOf(cg.getStatus()));
             observableListStudents.clear();
-            observableListStudents.addAll(StudentUtil.extractNames(cg.getStudents()));
+            observableListStudents.addAll(studentDAO.getByClassId(cg.getCgID()));
         } else {
             labelClass.setText("");
             labelStatus.setText("");
@@ -110,6 +115,11 @@ public class FXMLClassesController implements Initializable {
             showAlert();
         }
     }
+    
+    @FXML
+    private void handleButtonBack(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.HOME);
+    }
 
     public boolean showFXMLClassesDialog(ClassGroup cg) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPaths.CLASSESDIALOG));
@@ -123,5 +133,4 @@ public class FXMLClassesController implements Initializable {
         stage.showAndWait();
         return controller.isButtonConfirmClicked();
     }
-
 }

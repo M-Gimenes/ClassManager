@@ -1,23 +1,18 @@
 package classmanager.model.domain;
 
-import java.util.List;
-
+// Matheus
 public class ClassGroup {
 
     private int cgID;
     private String name;
     private float value;
     private int weeklyFreq;
-    private List<Student> students;
-    private List<Lesson> lessons;
     private Status status;
 
-    public ClassGroup(String name, float value, int weeklyFreq, List<Student> students, List<Lesson> lessons, Status status) {
+    public ClassGroup(String name, float value, int weeklyFreq, Status status) {
         this.name = name;
         this.value = value;
         this.weeklyFreq = weeklyFreq;
-        this.students = students;
-        this.lessons = lessons;
         this.status = status;
     }
 
@@ -56,30 +51,6 @@ public class ClassGroup {
         this.weeklyFreq = weeklyFreq;
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
-
-    public void addStudent(Student student) {
-        this.students.add(student);
-    }
-
-    public void addLesson(Lesson lesson) {
-        this.lessons.add(lesson);
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -87,7 +58,7 @@ public class ClassGroup {
     public void setStatus(Status status) {
         this.status = status;
     }
-    
+
     @Override
     public String toString() {
         return name;
