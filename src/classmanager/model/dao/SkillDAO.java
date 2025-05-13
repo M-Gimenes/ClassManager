@@ -1,8 +1,8 @@
 package classmanager.model.dao;
 
 import classmanager.model.database.DatabaseManager;
-import classmanager.model.domain.Skill;
 import classmanager.util.LoggerUtil;
+import classmanager.model.domain.Skill;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ public class SkillDAO {
     private SkillDAO() {
         this.conn = DatabaseManager.getInstance().getConnection();
         createTableIfNotExists();
+        populateTable();
     }
 
     public static SkillDAO getInstance() {
@@ -37,6 +38,16 @@ public class SkillDAO {
             LoggerUtil.logError("SkillDAO - createTableIfNotExists", e);
         }
     }
+    
+    private void populateTable(){
+        insert(new Skill("SPEAKING"));
+        insert(new Skill("WRITING"));
+        insert(new Skill("COVERSATION"));
+        insert(new Skill("READING"));
+        insert(new Skill("LISTENING"));
+        insert(new Skill("GRAMMAR"));
+    }
+    
 
     public void insert(Skill skill) {
         String sql = "INSERT INTO skills (name) VALUES (?)";

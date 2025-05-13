@@ -2,7 +2,6 @@ package classmanager.controller;
 
 import classmanager.Main;
 import classmanager.model.dao.StudentDAO;
-import classmanager.model.domain.ClassGroup;
 import classmanager.model.domain.Student;
 import classmanager.util.ViewPaths;
 import java.io.IOException;
@@ -18,23 +17,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class FXMLStudentController implements Initializable {
+public class FXMLStudentsController implements Initializable {
 
     @FXML
     private Button buttonBack;
-    @FXML
-    private TableView<Student> tableViewStudents;
-    @FXML
-    private TableColumn<Student, String> tableViewColumnName;
-    @FXML
-    private TableColumn<Student, ClassGroup> tableViewColumnClass;
     @FXML
     private Label labelName;
     @FXML
@@ -52,6 +44,13 @@ public class FXMLStudentController implements Initializable {
     @FXML
     private Button buttonRemove;
 
+    @FXML
+    private TableView<Student> tableViewStudents;
+    @FXML
+    private TableColumn<Student, String> tableColumnName;
+    @FXML
+    private TableColumn<Student, Class> tableColumnClass;
+
     private StudentDAO studentDAO;
     private ObservableList<Student> observableListStudents;
 
@@ -59,7 +58,10 @@ public class FXMLStudentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         studentDAO = StudentDAO.getInstance();
         observableListStudents = FXCollections.observableArrayList(studentDAO.getAllStudents());
+        tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableColumnClass.setCellValueFactory(new PropertyValueFactory<>("ClassName")); 
         tableViewStudents.setItems(observableListStudents);
+
         tableViewStudents.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> selectItemTableViewStudents(newValue));
     }
@@ -95,7 +97,7 @@ public class FXMLStudentController implements Initializable {
     @FXML
     private void handleButtonAdd(ActionEvent event) throws IOException {
         Student student = new Student();
-        boolean buttonConfirmClicked = showFXMLClassesDialog(student);
+        boolean buttonConfirmClicked = showFXMLStudentsDialog(student);
         if (buttonConfirmClicked) {
             studentDAO.insertStudent(student);
             observableListStudents.add(student);
@@ -109,6 +111,7 @@ public class FXMLStudentController implements Initializable {
             boolean buttonConfirmClicked = showFXMLStudentsDialog(student);
             if (buttonConfirmClicked) {
                 studentDAO.updateStudent(student);
+                observableListStudents.setAll(studentDAO.getAllStudents());
                 tableViewStudents.getSelectionModel().clearSelection();
             }
         } else {
@@ -132,9 +135,7 @@ public class FXMLStudentController implements Initializable {
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-
-        FXMLClasses
-                DialogController controller = loader.getController();
+        FXMLStudentsDialogController controller = loader.getController();
         controller.setStage(stage);
         controller.setStudent(student);
         stage.showAndWait();

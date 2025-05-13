@@ -29,13 +29,13 @@ public class ClassGroupDAO {
     }
 
     private void createTableIfNotExists() {
-        String sql = "CREATE TABLE IF NOT EXISTS classes (" +
-                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                     "name TEXT NOT NULL, " +
-                     "value REAL NOT NULL, " +
-                     "weekly_freq INTEGER NOT NULL, " +
-                     "status TEXT NOT NULL" +
-                     ");";
+        String sql = "CREATE TABLE IF NOT EXISTS classes ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "name TEXT NOT NULL, "
+                + "value REAL NOT NULL, "
+                + "weekly_freq INTEGER NOT NULL, "
+                + "status TEXT NOT NULL"
+                + ");";
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
@@ -77,6 +77,26 @@ public class ClassGroupDAO {
         }
 
         return classGroups;
+    }
+
+    public ClassGroup getClassGroupById(int classId) {
+        String sql = "SELECT * FROM classes WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, classId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                ClassGroup cg = new ClassGroup();
+                cg.setCgID(rs.getInt("id"));
+                cg.setName(rs.getString("name"));
+                cg.setValue(rs.getFloat("value"));
+                cg.setWeeklyFreq(rs.getInt("weekly_freq"));
+                cg.setStatus(Status.valueOf(rs.getString("status")));
+                return cg;
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("ClassGroupDAO - getClassGroupById", e);
+        }
+        return null;
     }
 
     public void updateClassGroup(int classId, ClassGroup cg) {

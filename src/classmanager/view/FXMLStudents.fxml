@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="500.0" styleClass="root" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classmanager.controller.FXMLStudentController">
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="500.0" styleClass="root" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classmanager.controller.FXMLStudentsController">
    <children>
       <SplitPane dividerPositions="0.4" layoutX="20.0" layoutY="212.0" prefHeight="400.0" prefWidth="600.0" styleClass="root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -35,10 +35,10 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TableView fx:id="tableViewStudents" layoutX="-3.0" layoutY="38.0" prefHeight="260.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+                  <TableView fx:id="tableViewStudents" layoutY="38.0" prefHeight="260.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
                     <columns>
-                      <TableColumn fx:id="tableViewColumnName" prefWidth="75.0" text="Nome" />
-                      <TableColumn fx:id="tableViewColumnClass" prefWidth="75.0" text="Turma" />
+                      <TableColumn fx:id="tableColumnName" prefWidth="75.0" text="Nome" />
+                      <TableColumn fx:id="tableColumnClass" prefWidth="75.0" text="Turma" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

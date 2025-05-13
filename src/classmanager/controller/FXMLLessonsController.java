@@ -3,9 +3,7 @@ package classmanager.controller;
 import classmanager.Main;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +24,7 @@ import classmanager.model.dao.LessonDAO;
 import classmanager.model.domain.ClassGroup;
 import classmanager.model.domain.Lesson;
 import classmanager.util.ViewPaths;
+import javafx.scene.control.Alert;
 
 public class FXMLLessonsController implements Initializable {
 
@@ -35,8 +34,7 @@ public class FXMLLessonsController implements Initializable {
     private ClassGroupDAO classDAO;
     private LessonDAO lessonDAO;
 
-    private ObservableList<ClassGroup> observableListCG;
-    private ObservableList<Lesson> observableListLesson;
+    private ObservableList<Lesson> observableListLessons;
 
     @FXML
     private TableView<Lesson> tableView;
@@ -55,17 +53,14 @@ public class FXMLLessonsController implements Initializable {
     @FXML
     private Button buttonUpdate;
     private ClassGroup cgSelected;
-    private List<Lesson> lessons;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        observableListCG = FXCollections.observableArrayList();
-        observableListLesson = FXCollections.observableArrayList();
+        observableListLessons = FXCollections.observableArrayList();
         classDAO = ClassGroupDAO.getInstance();
         lessonDAO = LessonDAO.getInstance();
-        observableListCG.addAll(classDAO.getAllClasses());
-        comboBox.setItems(observableListCG);
-        tableView.setItems(observableListLesson);
+        comboBox.getItems().addAll(classDAO.getAllClasses());
+        tableView.setItems(observableListLessons);
 
         tableViewColumnDate.setCellValueFactory(new PropertyValueFactory<>("day"));
         tableViewColumnContent.setCellValueFactory(new PropertyValueFactory<>("content"));
@@ -77,45 +72,68 @@ public class FXMLLessonsController implements Initializable {
     }
 
     public void loadTableView(ClassGroup cg) {
-        observableListLesson.addAll(lessonDAO.getLessonsByClassId(cg.getCgID()));
+        observableListLessons.addAll(lessonDAO.getLessonsByClassId(cg.getCgID()));
         cgSelected = cg;
     }
 
-   @FXML
-    private void handleButtonAdd(ActionEvent event) throws IOException {
-//        Lesson lesson = new Lesson();
-//        boolean buttonConfirmClicked = showFXMLClassesDialog(lesson);
-//        if (buttonConfirmClicked) {
-//            lessons.add(lesson);
-//            lessonDAO.saveLessons(cgSelected.getCgID(), lessons);
-//            observableListLesson.add(lesson);
-//        }
-    }
-
-    @FXML   
-    private void handleButtonRemove(ActionEvent event) {
+    public void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Nenhuma aula selecionada");
+        alert.setContentText("Por favor, escolha uma aula na Tabela!");
+        alert.show();
     }
 
     @FXML
-    private void handleButtonUpdate(ActionEvent event) {
+    private void handleButtonAdd(ActionEvent event) throws IOException {
+        Lesson lesson = new Lesson();
+        lesson.setClassId(cgSelected.getCgID());
+        boolean buttonConfirmClicked = showFXMLLessonsDialog(lesson);
+        if (buttonConfirmClicked) {
+            lessonDAO.insertLesson(lesson);
+            observableListLessons.add(lesson);
+        }
     }
-    
+
+    @FXML
+    private void handleButtonRemove(ActionEvent event) {
+        Lesson lesson = tableView.getSelectionModel().getSelectedItem();
+        if (lesson != null) {
+            lessonDAO.deleteLesson(lesson.getId());
+            observableListLessons.remove(lesson);
+        } else {
+            showAlert();
+        }
+    }
+
+    @FXML
+    private void handleButtonUpdate(ActionEvent event) throws IOException {
+                Lesson lesson = tableView.getSelectionModel().getSelectedItem();
+        if (lesson != null) {
+            boolean buttonConfirmClicked = showFXMLLessonsDialog(lesson);
+            if (buttonConfirmClicked) {
+                lessonDAO.updateLesson(lesson);
+                tableView.getSelectionModel().clearSelection();
+            }
+        } else {
+            showAlert();
+        }
+    }
+
     @FXML
     private void handleButtonBack(ActionEvent event) throws IOException {
         Main.setRoot(ViewPaths.HOME);
     }
 
-//    public boolean showFXMLScheduleDialog(Lesson lesson) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPaths.SCHEDULEDIALOG));
-//        Parent root = loader.load();
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(root));
-//        stage.setTitle("Insira os dados");
-//        FXMLClassesDialogController controller = loader.getController();
-//        controller.setStage(stage);
-//        controller.setClassGroup(lesson);
-//        stage.showAndWait();
-//        return controller.isButtonConfirmClicked();
-//    }
-//
+    public boolean showFXMLLessonsDialog(Lesson lesson) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPaths.LESSONSDIALOG));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Insira os dados");
+        FXMLLessonsDialogController controller = loader.getController();
+        controller.setStage(stage);
+        controller.setLesson(lesson);
+        stage.showAndWait();
+        return controller.isButtonConfirmClicked();
+    }
 }

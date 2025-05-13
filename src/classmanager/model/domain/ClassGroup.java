@@ -1,5 +1,6 @@
 package classmanager.model.domain;
 
+// Matheus
 public class ClassGroup {
 
     private int cgID;

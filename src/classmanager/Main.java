@@ -20,8 +20,6 @@ public class Main extends Application {
 
         scene = new Scene(root);
 
-        // scene.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
-
         stage.setTitle("Planilha de aulas");
         stage.setScene(scene);
         stage.setResizable(false);

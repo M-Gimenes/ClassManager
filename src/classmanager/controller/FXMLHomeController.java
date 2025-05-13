@@ -35,7 +35,8 @@ public class FXMLHomeController implements Initializable {
     }
 
     @FXML
-    private void handleMenuStudents(ActionEvent event) {
+    private void handleMenuStudents(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.STUDENTS);
     }
 
     @FXML

@@ -1,7 +1,6 @@
 package classmanager.model.domain;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public class Lesson {

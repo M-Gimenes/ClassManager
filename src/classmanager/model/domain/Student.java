@@ -1,6 +1,9 @@
 package classmanager.model.domain;
 
+import classmanager.model.dao.ClassGroupDAO;
 import java.time.LocalDate;
+
+// Emanuelly
 
 public class Student {
 
@@ -27,7 +30,12 @@ public class Student {
     public int getClassId() {
         return classId;
     }
+    
+    public String getClassName() {
+        return ClassGroupDAO.getInstance().getClassGroupById(classId).getName();
+    }
 
+    
     public void setClassId(int classId) {
         this.classId = classId;
     }
@@ -78,6 +86,11 @@ public class Student {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
 }

@@ -2,6 +2,8 @@ package classmanager.model.dao;
 
 import classmanager.model.database.DatabaseManager;
 import classmanager.model.domain.Lesson;
+import classmanager.model.domain.Skill;
+import classmanager.model.domain.Student;
 import classmanager.util.LoggerUtil;
 
 import java.sql.*;
@@ -13,9 +15,13 @@ public class LessonDAO {
 
     private final Connection conn;
     private static LessonDAO instance;
+    private LessonSkillDAO lSkillDAO;
+    private LessonStudentDAO lStudentDAO;
 
     private LessonDAO() {
         this.conn = DatabaseManager.getInstance().getConnection();
+        lSkillDAO = LessonSkillDAO.getInstance();
+        lStudentDAO = LessonStudentDAO.getInstance();
         createTableIfNotExists();
     }
 
@@ -40,17 +46,32 @@ public class LessonDAO {
         }
     }
 
-    public void insertLesson(Lesson lesson) {
-        String sql = "INSERT INTO lessons (class_id, day, content) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, lesson.getClassId());
-            stmt.setString(2, lesson.getDay().toString());
-            stmt.setString(3, lesson.getContent());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            LoggerUtil.logError("LessonDAO - insertLesson", e);
+public void insertLesson(Lesson lesson) {
+    String sql = "INSERT INTO lessons (class_id, day, content) VALUES (?, ?, ?)";
+    try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        stmt.setInt(1, lesson.getClassId());
+        stmt.setString(2, lesson.getDay().toString());
+        stmt.setString(3, lesson.getContent());
+        stmt.executeUpdate();
+
+        try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                int lessonId = generatedKeys.getInt(1);
+                lesson.setId(lessonId);
+                for (Skill skill : lesson.getSkills()) {
+                    lSkillDAO.insert(lessonId, skill.getId());
+                }
+                for (Student student : lesson.getStudents()) {
+                    lStudentDAO.insert(lessonId, student.getId());
+                }
+            }
         }
+
+    } catch (SQLException e) {
+        LoggerUtil.logError("LessonDAO - insertLesson", e);
     }
+}
+
 
     public List<Lesson> getLessonsByClassId(int classId) {
         List<Lesson> lessons = new ArrayList<>();
@@ -64,6 +85,8 @@ public class LessonDAO {
                     lesson.setClassId(rs.getInt("class_id"));
                     lesson.setDay(LocalDate.parse(rs.getString("day")));
                     lesson.setContent(rs.getString("content"));
+                    lesson.setSkills(lSkillDAO.getSkillsByLessonId(lesson.getId()));
+                    lesson.setStudents(lStudentDAO.getStudentsByLessonId(lesson.getId()));
                     lessons.add(lesson);
                 }
             }
@@ -73,13 +96,13 @@ public class LessonDAO {
         return lessons;
     }
 
-    public void updateLesson(int lessonId, Lesson lesson) {
+    public void updateLesson(Lesson lesson) {
         String sql = "UPDATE lessons SET class_id = ?, day = ?, content = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, lesson.getClassId());
             stmt.setString(2, lesson.getDay().toString());
             stmt.setString(3, lesson.getContent());
-            stmt.setInt(4, lessonId);
+            stmt.setInt(4, lesson.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             LoggerUtil.logError("LessonDAO - updateLesson", e);
@@ -105,4 +128,5 @@ public class LessonDAO {
             LoggerUtil.logError("LessonDAO - deleteLessonsByClassId", e);
         }
     }
+
 }
