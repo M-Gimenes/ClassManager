@@ -17,7 +17,6 @@ public class SkillDAO {
     private SkillDAO() {
         this.conn = DatabaseManager.getInstance().getConnection();
         createTableIfNotExists();
-        populateTable();
     }
 
     public static SkillDAO getInstance() {
@@ -37,6 +36,7 @@ public class SkillDAO {
         } catch (SQLException e) {
             LoggerUtil.logError("SkillDAO - createTableIfNotExists", e);
         }
+        populateTable();
     }
     
     private void populateTable(){

@@ -66,16 +66,19 @@ public class LessonSkillDAO {
 
     public List<Skill> getSkillsByLessonId(int lessonId) {
         List<Skill> skills = new ArrayList<>();
-        String sql = "SELECT skill_id FROM lesson_skills WHERE lesson_id = ?";
+        String sql = "SELECT s.* FROM skills s "
+                + "JOIN lesson_skills ls ON s.id = ls.skill_id "
+                + "WHERE ls.lesson_id = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, lessonId);
             ResultSet rs = stmt.executeQuery();
 
-            SkillDAO skillDAO = SkillDAO.getInstance();
             while (rs.next()) {
-                int skillId = rs.getInt("skill_id");
-                skillDAO.getById(skillId).ifPresent(skills::add);
+                Skill skill = new Skill();
+                skill.setId(rs.getInt("id"));
+                skill.setName(rs.getString("name"));
+                skills.add(skill);
             }
         } catch (SQLException e) {
             LoggerUtil.logError("LessonSkillDAO - getSkillsByLessonId", e);
@@ -83,4 +86,5 @@ public class LessonSkillDAO {
 
         return skills;
     }
+
 }

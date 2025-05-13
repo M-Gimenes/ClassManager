@@ -1,5 +1,6 @@
 package classmanager.controller;
 
+import classmanager.model.dao.LessonDAO;
 import classmanager.model.dao.SkillDAO;
 import classmanager.model.dao.StudentDAO;
 import classmanager.model.domain.Lesson;
@@ -7,7 +8,9 @@ import classmanager.model.domain.Skill;
 import classmanager.model.domain.Student;
 import classmanager.util.InputValidator;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,6 +57,7 @@ public class FXMLLessonsDialogController implements Initializable {
 
     private SkillDAO skillDAO;
     private StudentDAO studentDAO;
+    private LessonDAO lessonDAO;
 
     private ObservableList<Skill> observableListSkills;
     private ObservableList<Student> observableListStudents;
@@ -62,6 +66,7 @@ public class FXMLLessonsDialogController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         skillDAO = SkillDAO.getInstance();
         studentDAO = StudentDAO.getInstance();
+        lessonDAO = lessonDAO.getInstance();
         comboBoxSkills.getItems().addAll(skillDAO.getAll());
         comboBoxStudents.getItems().addAll(studentDAO.getAllStudents());
         observableListSkills = FXCollections.observableArrayList();
@@ -92,10 +97,17 @@ public class FXMLLessonsDialogController implements Initializable {
         return buttonConfirmClicked;
     }
 
+    public void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Dia inválido");
+        alert.setContentText("Essa turma já realizou duas aulas nesse dia. Escolha outro!");
+        alert.show();
+    }
+
     @FXML
     private void handleButtonAddSkill(ActionEvent event) {
         Skill skill = comboBoxSkills.getValue();
-        if (skill != null) {
+        if (skill != null && !observableListSkills.stream().anyMatch(s -> s.getId() == skill.getId())) {
             observableListSkills.add(skill);
         }
     }
@@ -111,7 +123,7 @@ public class FXMLLessonsDialogController implements Initializable {
     @FXML
     private void handleButtonAddStudent(ActionEvent event) {
         Student student = comboBoxStudents.getValue();
-        if (student != null) {
+        if (student != null && !observableListStudents.stream().anyMatch(s -> s.getId() == student.getId())) {
             observableListStudents.add(student);
         }
     }
@@ -127,12 +139,16 @@ public class FXMLLessonsDialogController implements Initializable {
     @FXML
     private void handleButtonConfirm(ActionEvent event) {
         if (validateInputs()) {
-            lesson.setContent(fieldContent.getText());
-            lesson.setDay(dateDate.getValue());
-            lesson.setSkills(observableListSkills);
-            lesson.setStudents(observableListStudents);
-            buttonConfirmClicked = true;
-            stage.close();
+            if (validateDateBusinessRule()) { 
+                lesson.setContent(fieldContent.getText());
+                lesson.setDay(dateDate.getValue());
+                lesson.setSkills(observableListSkills);
+                lesson.setStudents(observableListStudents);
+                buttonConfirmClicked = true;
+                stage.close();
+            } else {
+                showAlert();
+            }
         }
     }
 
@@ -140,6 +156,13 @@ public class FXMLLessonsDialogController implements Initializable {
     private void handleButtonCancel(ActionEvent event) {
         stage.close();
     }
+    
+    //Regra de negócio
+    private boolean validateDateBusinessRule(){
+        List<Lesson> lessonsOnSameDay = lessonDAO.getLessonsByClassIdAndDate(lesson.getClassId(), dateDate.getValue());
+        return lessonsOnSameDay.size() < 2;
+    }
+    
 
     private boolean validateInputs() {
         String errorMessage = "";
@@ -160,4 +183,5 @@ public class FXMLLessonsDialogController implements Initializable {
             return false;
         }
     }
+
 }

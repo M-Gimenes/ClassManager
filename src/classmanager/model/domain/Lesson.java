@@ -2,9 +2,10 @@ package classmanager.model.domain;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Lesson {
-    
+
     private int id;
     private int classId;
     private LocalDate day;
@@ -65,9 +66,21 @@ public class Lesson {
     public String getContent() {
         return content;
     }
-                                               
+
     public void setContent(String content) {
         this.content = content;
     }
-    
+
+    public String getSkillsAsString() {
+        return skills.stream()
+                .map(Skill::getName) // Supondo que `Skill` tenha o método `getName()`
+                .collect(Collectors.joining(", "));
+    }
+
+    public String getStudentsAsString() {
+        return students.stream()
+                .map(Student::getName) // Supondo que `Student` tenha o método `getName()`
+                .collect(Collectors.joining(", "));
+    }
+
 }

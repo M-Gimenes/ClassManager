@@ -52,7 +52,7 @@ public class FXMLLessonsController implements Initializable {
     private Button buttonRemove;
     @FXML
     private Button buttonUpdate;
-    private ClassGroup cgSelected;
+    private ClassGroup cgSelected = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,14 +64,15 @@ public class FXMLLessonsController implements Initializable {
 
         tableViewColumnDate.setCellValueFactory(new PropertyValueFactory<>("day"));
         tableViewColumnContent.setCellValueFactory(new PropertyValueFactory<>("content"));
-        tableViewColumnSkills.setCellValueFactory(new PropertyValueFactory<>("skills"));
-        tableViewColumnStudents.setCellValueFactory(new PropertyValueFactory<>("students"));
+        tableViewColumnSkills.setCellValueFactory(new PropertyValueFactory<>("skillsAsString"));
+        tableViewColumnStudents.setCellValueFactory(new PropertyValueFactory<>("studentsAsString"));
 
         comboBox.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> loadTableView(newValue));
     }
 
     public void loadTableView(ClassGroup cg) {
+        observableListLessons.clear();
         observableListLessons.addAll(lessonDAO.getLessonsByClassId(cg.getCgID()));
         cgSelected = cg;
     }
@@ -86,11 +87,15 @@ public class FXMLLessonsController implements Initializable {
     @FXML
     private void handleButtonAdd(ActionEvent event) throws IOException {
         Lesson lesson = new Lesson();
-        lesson.setClassId(cgSelected.getCgID());
-        boolean buttonConfirmClicked = showFXMLLessonsDialog(lesson);
-        if (buttonConfirmClicked) {
-            lessonDAO.insertLesson(lesson);
-            observableListLessons.add(lesson);
+        if (cgSelected != null) {
+            lesson.setClassId(cgSelected.getCgID());
+            boolean buttonConfirmClicked = showFXMLLessonsDialog(lesson);
+            if (buttonConfirmClicked) {
+                lessonDAO.insertLesson(lesson);
+                observableListLessons.add(lesson);
+            }
+        } else {
+            showAlert();
         }
     }
 
@@ -107,12 +112,12 @@ public class FXMLLessonsController implements Initializable {
 
     @FXML
     private void handleButtonUpdate(ActionEvent event) throws IOException {
-                Lesson lesson = tableView.getSelectionModel().getSelectedItem();
+        Lesson lesson = tableView.getSelectionModel().getSelectedItem();
         if (lesson != null) {
             boolean buttonConfirmClicked = showFXMLLessonsDialog(lesson);
             if (buttonConfirmClicked) {
                 lessonDAO.updateLesson(lesson);
-                tableView.getSelectionModel().clearSelection();
+                loadTableView(cgSelected);
             }
         } else {
             showAlert();
