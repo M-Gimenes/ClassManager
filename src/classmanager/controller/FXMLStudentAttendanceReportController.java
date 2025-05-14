@@ -1,46 +1,50 @@
 package classmanager.controller;
 
+import classmanager.Main;
 import classmanager.model.dao.LessonStudentDAO;
+import classmanager.util.ViewPaths;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-
-import javafx.scene.control.cell.MapValueFactory;
-import javafx.util.Callback;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.AnchorPane;
 
 public class FXMLStudentAttendanceReportController {
-    @FXML
     private TableView<String[]> attendanceTable;
 
-    @FXML
     private TableColumn<String[], String> AlunoColumn;
 
-    @FXML
     private TableColumn<String[], String> TurmaColumn;
 
-    @FXML
     private TableColumn<String[], String> FrequenciaColumn;
-
     @FXML
+    private AnchorPane root;
+    @FXML
+    private Button buttonPrint;
+    @FXML
+    private TableView<?> tableViewAttendance;
+    @FXML
+    private Button buttonBack;
+
     public void initialize() {
         loadData();
     }
 
     private void loadData() {
-        ObservableList<String[]> data = FXCollections.observableArrayList(
-            LessonStudentDAO.getInstance().getStudentAttendanceReport()
-        );
+    }
 
-        AlunoColumn.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createStringBinding(() -> cellData.getValue()[0]));
-        TurmaColumn.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createStringBinding(() -> cellData.getValue()[1]));
-        FrequenciaColumn.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createStringBinding(() -> cellData.getValue()[2]));
+    @FXML
+    private void handleButtonPrint(ActionEvent event) {
+        //
+    }
 
-        attendanceTable.setItems(data);
+    @FXML
+    private void handleButtonBack(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.HOME);
     }
 }
 

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Emanuelly e Matheus
 public class Lesson {
 
     private int id;
