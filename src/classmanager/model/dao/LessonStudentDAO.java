@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LessonStudentDAO {
 
@@ -97,11 +99,12 @@ public class LessonStudentDAO {
     }
 
     //Regra de negócio
-    public void payLesson(int lessonId, int studentId) {
-        String sql = "UPDATE lesson_students SET paid = 1 WHERE lesson_id = ? AND student_id = ?";
+    public void payLesson(int lessonId, int studentId, int paid) {
+        String sql = "UPDATE lesson_students SET paid = ? WHERE lesson_id = ? AND student_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, lessonId);
-            stmt.setInt(2, studentId);
+            stmt.setInt(1, paid);
+            stmt.setInt(2, lessonId);
+            stmt.setInt(3, studentId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             LoggerUtil.logError("LessonStudentDAO - payLesson", e);
@@ -115,12 +118,61 @@ public class LessonStudentDAO {
             stmt.setInt(2, studentId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getBoolean("pago");
+                return rs.getBoolean("paid");
             }
         } catch (SQLException e) {
             LoggerUtil.logError("LessonStudentDAO - isPaid", e);
         }
         return false;
     }
+
+    public List<String[]> getStudentAttendanceReport() {
+        List<String[]> report = new ArrayList<>();
+    
+        String sql = "SELECT s.name AS student_name, c.name AS class_name, COUNT(ls.lesson_id) AS lessons_attended " +
+                     "FROM lesson_students ls " +
+                     "JOIN lessons l ON ls.lesson_id = l.id " +
+                     "JOIN students s ON ls.student_id = s.id " +
+                     "JOIN classes c ON l.class_id = c.id " +
+                     "GROUP BY s.name, c.name " +
+                     "ORDER BY c.name, s.name";
+    
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String[] line = new String[3];
+                line[0] = rs.getString("student_name");
+                line[1] = rs.getString("class_name");
+                line[2] = String.valueOf(rs.getInt("lessons_attended"));
+                report.add(line);
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("LessonStudentDAO - getStudentAttendanceReport", e);
+        }
+    
+        return report;
+    }
+    public Map<String, Double> getTotalReceivedPerClass() {
+        Map<String, Double> totals = new HashMap<>();
+        String sql = "SELECT c.name AS class_name, SUM(cl.value) AS total_received " +
+                    "FROM lesson_students ls " +
+                    "JOIN lessons l ON ls.lesson_id = l.id " +
+                    "JOIN classes c ON l.class_id = c.id " +
+                    "JOIN classes cl ON cl.id = l.class_id " +
+                    "WHERE ls.paid = 1 " +
+                    "GROUP BY c.name";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                totals.put(rs.getString("class_name"), rs.getDouble("total_received"));
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("LessonStudentDAO - getTotalReceivedPerClass", e);
+        }
+
+        return totals;
+    }
+    
 
 }

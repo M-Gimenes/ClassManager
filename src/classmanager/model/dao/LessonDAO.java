@@ -9,7 +9,9 @@ import classmanager.util.LoggerUtil;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LessonDAO {
 
@@ -197,4 +199,49 @@ public class LessonDAO {
         return lessons;
     }
 
+    public List<Lesson> getLessonsByStudentId(int studentId) {
+        List<Lesson> lessons = new ArrayList<>();
+        String sql = "SELECT l.* FROM lessons l "
+                + "JOIN lesson_students ls ON l.id = ls.lesson_id "
+                + "WHERE ls.student_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Lesson lesson = new Lesson();
+                    lesson.setId(rs.getInt("id"));
+                    lesson.setClassId(rs.getInt("class_id"));
+                    lesson.setDay(LocalDate.parse(rs.getString("day")));
+                    lesson.setContent(rs.getString("content"));
+                    lesson.setSkills(lSkillDAO.getSkillsByLessonId(lesson.getId()));
+                    lesson.setStudents(lStudentDAO.getStudentsByLessonId(lesson.getId()));
+                    lessons.add(lesson);
+                }
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("LessonDAO - getLessonsByStudentId", e);
+        }
+
+        return lessons;
+    }
+
+    public Map<String, Integer> getLessonCountPerClass() {
+        Map<String, Integer> classLessonMap = new HashMap<>();
+        String sql = "SELECT c.name AS class_name, COUNT(l.id) AS total_lessons "
+                + "FROM lessons l "
+                + "JOIN classes c ON l.class_id = c.id "
+                + "GROUP BY c.name";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                classLessonMap.put(rs.getString("class_name"), rs.getInt("total_lessons"));
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("LessonDAO - getLessonCountPerClass", e);
+        }
+
+        return classLessonMap;
+    }
 }

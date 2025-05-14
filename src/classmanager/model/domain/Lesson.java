@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Emanuelly e Matheus
 public class Lesson {
 
     private int id;
@@ -82,5 +83,6 @@ public class Lesson {
                 .map(Student::getName) // Supondo que `Student` tenha o método `getName()`
                 .collect(Collectors.joining(", "));
     }
+    
 
 }
