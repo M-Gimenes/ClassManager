@@ -9,5 +9,7 @@ public class ViewPaths {
     public static final String LESSONS = "view/FXMLLessons.fxml";
     public static final String LESSONSDIALOG = "/classmanager/view/FXMLLessonsDialog.fxml";
     public static final String LESSONCHART = "/classmanager/view/FXMLLessonChart.fxml";
-    public static final String ATTENDANCEREPORT = "/classmanager/view/FXMlStudentAttendanceReport.fxml";
+    public static final String ATTENDANCEREPORT = "/classmanager/view/FXMLStudentAttendanceReport.fxml";
+    public static final String REVENUECHART = "/classmanager/view/FXMLRevenueChart.fxml";
+
 }
