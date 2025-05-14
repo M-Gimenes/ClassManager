@@ -19,11 +19,13 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private Button menuStudents;
     @FXML
-    private Button menuGraphics;
-    @FXML
     private Button menuLessons;
     @FXML
     private Button menuReports;
+    @FXML
+    private Button menuGraphics1;
+    @FXML
+    private Button menuGraphics2;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -55,8 +57,13 @@ public class FXMLHomeController implements Initializable {
     }
 
     @FXML
-    private void handleMenuGraphics(ActionEvent event) throws IOException{
+    private void handleMenuGraphics1(ActionEvent event) throws IOException {
         Main.setRoot(ViewPaths.LESSONCHART);
+    }
+
+    @FXML
+    private void handleMenuGraphics2(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.REVENUECHART);
     }
 
 }

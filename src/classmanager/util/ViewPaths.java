@@ -11,4 +11,5 @@ public class ViewPaths {
     public static final String PAYMENTS = "view/FXMLPayments.fxml";
     public static final String LESSONCHART = "view/FXMLLessonChart.fxml";
     public static final String ATTENDANCEREPORT = "view/FXMLStudentAttendanceReport.fxml";
+    public static final String REVENUECHART = "view/FXMLClassRevenueChart.fxml";
 }

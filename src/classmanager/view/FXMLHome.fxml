@@ -96,22 +96,42 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="menuGraphics" mnemonicParsing="false" onAction="#handleMenuGraphics" prefHeight="70.0" prefWidth="170.0" text="Graficos" textFill="#000000cb">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="field" />
-                  <String fx:value="menu-button" />
-               </styleClass>
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../style/icons/bar-chart-line.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="280.0" spacing="10.0">
+               <children>
+                  <Button fx:id="menuGraphics1" mnemonicParsing="false" onAction="#handleMenuGraphics1" prefHeight="70.0" prefWidth="170.0" text="Graficos" textFill="#000000cb">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="field" />
+                        <String fx:value="menu-button" />
+                     </styleClass>
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/icons/bar-chart-line.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="menuGraphics2" mnemonicParsing="false" onAction="#handleMenuGraphics2" prefHeight="70.0" prefWidth="170.0" text="Graficos" textFill="#000000cb">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="field" />
+                        <String fx:value="menu-button" />
+                     </styleClass>
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/icons/bar-chart-line.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

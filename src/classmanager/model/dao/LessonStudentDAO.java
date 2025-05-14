@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LessonStudentDAO {
 
@@ -149,6 +151,27 @@ public class LessonStudentDAO {
         }
     
         return report;
+    }
+    public Map<String, Double> getTotalReceivedPerClass() {
+        Map<String, Double> totals = new HashMap<>();
+        String sql = "SELECT c.name AS class_name, SUM(cl.value) AS total_received " +
+                    "FROM lesson_students ls " +
+                    "JOIN lessons l ON ls.lesson_id = l.id " +
+                    "JOIN classes c ON l.class_id = c.id " +
+                    "JOIN classes cl ON cl.id = l.class_id " +
+                    "WHERE ls.paid = 1 " +
+                    "GROUP BY c.name";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                totals.put(rs.getString("class_name"), rs.getDouble("total_received"));
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("LessonStudentDAO - getTotalReceivedPerClass", e);
+        }
+
+        return totals;
     }
     
 
