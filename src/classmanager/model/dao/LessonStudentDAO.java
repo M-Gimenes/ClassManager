@@ -124,4 +124,32 @@ public class LessonStudentDAO {
         return false;
     }
 
+    public List<String[]> getStudentAttendanceReport() {
+        List<String[]> report = new ArrayList<>();
+    
+        String sql = "SELECT s.name AS student_name, c.name AS class_name, COUNT(ls.lesson_id) AS lessons_attended " +
+                     "FROM lesson_students ls " +
+                     "JOIN lessons l ON ls.lesson_id = l.id " +
+                     "JOIN students s ON ls.student_id = s.id " +
+                     "JOIN classes c ON l.class_id = c.id " +
+                     "GROUP BY s.name, c.name " +
+                     "ORDER BY c.name, s.name";
+    
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String[] line = new String[3];
+                line[0] = rs.getString("student_name");
+                line[1] = rs.getString("class_name");
+                line[2] = String.valueOf(rs.getInt("lessons_attended"));
+                report.add(line);
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("LessonStudentDAO - getStudentAttendanceReport", e);
+        }
+    
+        return report;
+    }
+    
+
 }

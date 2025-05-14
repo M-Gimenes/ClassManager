@@ -51,10 +51,12 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void handleMenuReports(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.ATTENDANCEREPORT);
     }
 
     @FXML
-    private void handleMenuGraphics(ActionEvent event) {
+    private void handleMenuGraphics(ActionEvent event) throws IOException{
+        Main.setRoot(ViewPaths.LESSONCHART);
     }
 
 }
