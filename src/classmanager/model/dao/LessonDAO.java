@@ -9,7 +9,9 @@ import classmanager.util.LoggerUtil;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LessonDAO {
 
@@ -195,6 +197,25 @@ public class LessonDAO {
             LoggerUtil.logError("LessonDAO - getLessonsByClassIdAndDate", e);
         }
         return lessons;
+    }
+
+    public Map<String, Integer> getLessonCountPerClass() {
+        Map<String, Integer> classLessonMap = new HashMap<>();
+        String sql = "SELECT c.name AS class_name, COUNT(l.id) AS total_lessons " +
+                 "FROM lessons l " +
+                 "JOIN classes c ON l.class_id = c.id " +
+                 "GROUP BY c.name";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                classLessonMap.put(rs.getString("class_name"), rs.getInt("total_lessons"));
+            }
+        } catch (SQLException e) {
+        LoggerUtil.logError("LessonDAO - getLessonCountPerClass", e);
+        }
+
+        return classLessonMap;
     }
 
 }
