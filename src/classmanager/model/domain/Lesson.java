@@ -82,5 +82,6 @@ public class Lesson {
                 .map(Student::getName) // Supondo que `Student` tenha o método `getName()`
                 .collect(Collectors.joining(", "));
     }
+    
 
 }

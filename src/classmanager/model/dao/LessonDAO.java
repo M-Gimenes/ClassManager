@@ -197,4 +197,31 @@ public class LessonDAO {
         return lessons;
     }
 
+    public List<Lesson> getLessonsByStudentId(int studentId) {
+        List<Lesson> lessons = new ArrayList<>();
+        String sql = "SELECT l.* FROM lessons l "
+                + "JOIN lesson_students ls ON l.id = ls.lesson_id "
+                + "WHERE ls.student_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Lesson lesson = new Lesson();
+                    lesson.setId(rs.getInt("id"));
+                    lesson.setClassId(rs.getInt("class_id"));
+                    lesson.setDay(LocalDate.parse(rs.getString("day")));
+                    lesson.setContent(rs.getString("content"));
+                    lesson.setSkills(lSkillDAO.getSkillsByLessonId(lesson.getId()));
+                    lesson.setStudents(lStudentDAO.getStudentsByLessonId(lesson.getId()));
+                    lessons.add(lesson);
+                }
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("LessonDAO - getLessonsByStudentId", e);
+        }
+
+        return lessons;
+    }
+
 }

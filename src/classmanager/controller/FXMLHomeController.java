@@ -46,6 +46,7 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void handleMenuPayments(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.PAYMENTS);
     }
 
     @FXML

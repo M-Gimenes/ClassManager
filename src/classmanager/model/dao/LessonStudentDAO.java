@@ -97,11 +97,12 @@ public class LessonStudentDAO {
     }
 
     //Regra de negócio
-    public void payLesson(int lessonId, int studentId) {
-        String sql = "UPDATE lesson_students SET paid = 1 WHERE lesson_id = ? AND student_id = ?";
+    public void payLesson(int lessonId, int studentId, int paid) {
+        String sql = "UPDATE lesson_students SET paid = ? WHERE lesson_id = ? AND student_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, lessonId);
-            stmt.setInt(2, studentId);
+            stmt.setInt(1, paid);
+            stmt.setInt(2, lessonId);
+            stmt.setInt(3, studentId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             LoggerUtil.logError("LessonStudentDAO - payLesson", e);
@@ -115,7 +116,7 @@ public class LessonStudentDAO {
             stmt.setInt(2, studentId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getBoolean("pago");
+                return rs.getBoolean("paid");
             }
         } catch (SQLException e) {
             LoggerUtil.logError("LessonStudentDAO - isPaid", e);
