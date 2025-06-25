@@ -65,5 +65,10 @@ public class FXMLHomeController implements Initializable {
     private void handleMenuGraphics2(ActionEvent event) throws IOException {
         Main.setRoot(ViewPaths.REVENUECHART);
     }
+    
+    @FXML
+    private void handleMenuCounter(ActionEvent event) throws IOException {
+        Main.setRoot(ViewPaths.COUNTER);
+    }
 
 }

@@ -132,6 +132,22 @@
                   </Button>
                </children>
             </HBox>
+            <Button fx:id="menuCounter" mnemonicParsing="false" onAction="#handleMenuCounter" prefHeight="70.0" prefWidth="170.0" text="Contador" textFill="#000000cb">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="field" />
+                  <String fx:value="menu-button" />
+               </styleClass>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../style/icons/people.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </VBox>
    </children>
