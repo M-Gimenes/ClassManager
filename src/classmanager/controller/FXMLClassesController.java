@@ -21,7 +21,6 @@ import classmanager.model.dao.ClassGroupDAO;
 import classmanager.model.dao.StudentDAO;
 import classmanager.model.domain.ClassGroup;
 import classmanager.model.domain.Student;
-import classmanager.util.StudentUtil;
 import classmanager.util.ViewPaths;
 
 public class FXMLClassesController implements Initializable {

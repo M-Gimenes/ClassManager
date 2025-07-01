@@ -5,9 +5,20 @@
         <group>
             <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/model/domain/ClassGroup.java</file>
             <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/view/FXMLLessonsDialog.fxml</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/util/ViewPaths.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/controller/FXMLClassesController.java</file>
             <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/Main.java</file>
-            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/controller/FXMLClassRevenueChartController.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/threads/LogsThread.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/controller/FXMLHomeController.java</file>
             <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/model/domain/Student.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/controller/FXMLClassesDialogController.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/controller/FXMLClassRevenueChartController.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/sockets/thread/ContadorGrupo.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/view/FXMLCounter.fxml</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/controller/FXMLLessonsController.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/sockets/thread/LogGrupo.java</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/style/style.css</file>
+            <file>file:/C:/Users/Matheus/Desktop/Matheus/Programming/Java/POO2/ClassManager/src/classmanager/controller/FXMLCounterController.java</file>
         </group>
     </open-files>
 </project-private>

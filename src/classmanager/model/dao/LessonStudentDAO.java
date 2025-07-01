@@ -1,6 +1,7 @@
 package classmanager.model.dao;
 
 import classmanager.model.database.DatabaseManager;
+import classmanager.model.domain.ClassTotalValue;
 import classmanager.model.domain.Student;
 import classmanager.util.LoggerUtil;
 
@@ -128,15 +129,15 @@ public class LessonStudentDAO {
 
     public List<String[]> getStudentAttendanceReport() {
         List<String[]> report = new ArrayList<>();
-    
-        String sql = "SELECT s.name AS student_name, c.name AS class_name, COUNT(ls.lesson_id) AS lessons_attended " +
-                     "FROM lesson_students ls " +
-                     "JOIN lessons l ON ls.lesson_id = l.id " +
-                     "JOIN students s ON ls.student_id = s.id " +
-                     "JOIN classes c ON l.class_id = c.id " +
-                     "GROUP BY s.name, c.name " +
-                     "ORDER BY c.name, s.name";
-    
+
+        String sql = "SELECT s.name AS student_name, c.name AS class_name, COUNT(ls.lesson_id) AS lessons_attended "
+                + "FROM lesson_students ls "
+                + "JOIN lessons l ON ls.lesson_id = l.id "
+                + "JOIN students s ON ls.student_id = s.id "
+                + "JOIN classes c ON l.class_id = c.id "
+                + "GROUP BY s.name, c.name "
+                + "ORDER BY c.name, s.name";
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -149,23 +150,26 @@ public class LessonStudentDAO {
         } catch (SQLException e) {
             LoggerUtil.logError("LessonStudentDAO - getStudentAttendanceReport", e);
         }
-    
+
         return report;
     }
-    public Map<String, Double> getTotalReceivedPerClass() {
-        Map<String, Double> totals = new HashMap<>();
-        String sql = "SELECT c.name AS class_name, SUM(cl.value) AS total_received " +
-                    "FROM lesson_students ls " +
-                    "JOIN lessons l ON ls.lesson_id = l.id " +
-                    "JOIN classes c ON l.class_id = c.id " +
-                    "JOIN classes cl ON cl.id = l.class_id " +
-                    "WHERE ls.paid = 1 " +
-                    "GROUP BY c.name";
+
+    public List<ClassTotalValue> getTotalReceivedPerClass() {
+        List<ClassTotalValue> totals = new ArrayList<>();
+        String sql = "SELECT c.name AS class_name, SUM(cl.value) AS total_received "
+                + "FROM lesson_students ls "
+                + "JOIN lessons l ON ls.lesson_id = l.id "
+                + "JOIN classes c ON l.class_id = c.id "
+                + "JOIN classes cl ON cl.id = l.class_id "
+                + "WHERE ls.paid = 1 "
+                + "GROUP BY c.name";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                totals.put(rs.getString("class_name"), rs.getDouble("total_received"));
+                String className = rs.getString("class_name");
+                double total = rs.getDouble("total_received");
+                totals.add(new ClassTotalValue(className, total));
             }
         } catch (SQLException e) {
             LoggerUtil.logError("LessonStudentDAO - getTotalReceivedPerClass", e);
@@ -173,6 +177,5 @@ public class LessonStudentDAO {
 
         return totals;
     }
-    
 
 }

@@ -2,8 +2,10 @@ package classmanager.controller;
 
 import classmanager.Main;
 import classmanager.model.dao.LessonStudentDAO;
+import classmanager.model.domain.ClassTotalValue;
 import classmanager.util.ViewPaths;
 import java.io.IOException;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -19,18 +21,20 @@ public class FXMLClassRevenueChartController {
     @FXML
     private Button buttonBack;
 
+    private List<ClassTotalValue> data;
+
     public void initialize() {
         loadChart();
     }
 
     private void loadChart() {
-        Map<String, Double> data = LessonStudentDAO.getInstance().getTotalReceivedPerClass();
+        data = LessonStudentDAO.getInstance().getTotalReceivedPerClass();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Total Recebido (R$)");
 
-        for (Map.Entry<String, Double> entry : data.entrySet()) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
-        }
+        for (ClassTotalValue item : data) {
+            series.getData().add(new XYChart.Data<>(item.getClassName(), item.getTotal()));
+        }   
 
         barChart.getData().clear();
         barChart.getData().add(series);
