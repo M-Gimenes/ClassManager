@@ -128,4 +128,18 @@ public class StudentDAO {
         student.setClassId(rs.getInt("class_id"));
         return student;
     }
+
+    public String getStudentNameById(int studentId) {
+        String sql = "SELECT name FROM students WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, studentId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("name");
+            }
+        } catch (SQLException e) {
+            LoggerUtil.logError("StudentDAO - getStudentNameById", e);
+        }
+        return null; // ou usar Optional<String> se preferir
+    }
 }
