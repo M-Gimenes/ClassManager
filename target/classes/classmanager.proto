@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package classmanager;
+import "google/protobuf/empty.proto";
+
+message MemberNames {
+  repeated string names = 1;
+}
+
+message Student {
+  int64 id = 1;
+  string name = 2;
+}
+
+message StudentList {
+  repeated Student students = 1;
+}
+
+service ClassManagerService {
+  rpc GetGroupMembers(google.protobuf.Empty) returns (MemberNames);
+  rpc ListStudents(google.protobuf.Empty) returns (StudentList);
+}

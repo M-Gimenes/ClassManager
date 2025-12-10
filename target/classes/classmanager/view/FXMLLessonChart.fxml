@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classmanager.controller.FXMLClassLessonChartController">
+   <children>
+      <BarChart fx:id="barChart" layoutX="92.0">
+        <xAxis>
+          <CategoryAxis label="String" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Number" side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <Button layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonBack" styleClass="back-button">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../style/icons/arrow-left.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

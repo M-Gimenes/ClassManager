@@ -45,7 +45,7 @@ public class StudentDAO {
 
     public void insertStudent(Student student) {
         String sql = "INSERT INTO students (name, birth_date, fone_number, email, school, class_id) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, student.getName());
             stmt.setString(2, student.getBirthDate().toString());
             stmt.setString(3, student.getFoneNumber());
@@ -54,9 +54,12 @@ public class StudentDAO {
             stmt.setInt(6, student.getClassId());
             stmt.executeUpdate();
 
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                student.setId(rs.getInt(1));
+            // SQLite doesn't support getGeneratedKeys(), so fetch the last inserted rowid manually
+            try (Statement lastIdStmt = conn.createStatement();
+                 ResultSet rs = lastIdStmt.executeQuery("SELECT last_insert_rowid()")) {
+                if (rs.next()) {
+                    student.setId(rs.getInt(1));
+                }
             }
         } catch (SQLException e) {
             LoggerUtil.logError("StudentDAO - insertStudent", e);
